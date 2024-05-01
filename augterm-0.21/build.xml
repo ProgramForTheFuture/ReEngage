@@ -1,0 +1,137 @@
+<!--
+ - Copyright © 2006 Jonathan M. Cheyer
+ - All rights reserved.
+ -
+ - Licensed under GPL Version 2.
+ - http://www.gnu.org/licenses/gpl.html
+ -->
+<project name="augterm" default="main">
+
+  <!--  PROPERTY  -->
+
+  <property name="component.name" value="${ant.project.name}"/>
+  <property name="packages" value="org.nlsaugment.*"/>
+
+  <!-- need to keep in sync with AugTerm.AUTERM_VERSION. TODO: Remove need for synching. -->
+  <property name="version" value="0.21"/>
+
+  <dirname property="dir.top" file="${ant.file}"/>
+  <property name="dir.src" location="${dir.top}/src"/>
+  <property name="dir.src.java" location="${dir.src}/java"/>
+  <property name="dir.src.test" location="${dir.src}/test"/>
+  <property name="dir.src.html" location="${dir.src}/html"/>
+  <property name="dir.build" location="${dir.top}/build"/>
+  <property name="dir.build.classes" location="${dir.build}/classes"/>
+  <property name="dir.tar" location="${dir.build}/${component.name}-${version}"/>
+  <property name="file.jar" value="${component.name}.jar"/>
+  <property name="file.jar.build" value="${dir.tar}/${file.jar}"/>
+  <property name="file.targz" value="${component.name}.tar.gz"/>
+  <property name="file.html" value="augterm.html"/>
+  <property name="file.license" value="license.txt"/>
+  <property name="file.manifest" value="manifest.txt"/>
+
+  <property name="dir.doc" value="${dir.build}/doc"/>
+  <property name="dir.rls" value="${dir.top}/rls"/>
+
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.deprecation" value="on"/>
+
+  <path id="cp-compile">
+    <pathelement location="${dir.build.classes}"/>
+  </path>
+
+
+  <!--  INIT  -->
+
+  <target name="init" depends="">
+    <tstamp/>
+  </target>
+
+  <target name="init-build" depends="init">
+    <mkdir dir="${dir.build.classes}"/>
+  </target>
+
+  <target name="init-doc" depends="init">
+    <mkdir dir="${dir.doc}"/>
+  </target>
+
+
+  <!--  CLEAN  -->
+
+  <target name="do-antclean" depends="init">
+    <mkdir dir="${dir.build}"/>
+    <delete>
+      <fileset dir="${dir.build}" excludes="eclipse/**"/>
+    </delete>
+    <delete dir="${dir.rls}" />
+  </target>
+
+   <target name="do-clean" depends="init">
+      <delete dir="${dir.build}" />
+      <delete dir="${dir.rls}" />
+      <delete dir="${dir.doc}" />
+   </target>
+
+  <!--  COMPILE  -->
+
+  <target name="do-compile" depends="init-build">
+    <javac destdir="${dir.build.classes}" classpathref="cp-compile" failonerror="true" debug="${compiler.debug}" deprecation="${compiler.deprecation}" source="1.5" encoding="UTF8">
+      <compilerarg value="-Xlint"/>
+      <src path="${dir.src.java}" />
+      <src path="${dir.src.test}" />
+    </javac>
+  </target>
+
+
+  <!--  JAR  -->
+
+  <target name="do-jar" depends="init-build, do-compile">
+    <mkdir dir="${dir.tar}"/>
+    <jar zipfile="${file.jar.build}">
+      <fileset dir="${dir.build.classes}" includes="**/*.class"/>
+      <fileset dir="${dir.src}" includes="license.txt"/>
+      <manifest>
+        <attribute name="Main-Class" value="org.nlsaugment.augterm.AugTerm"/>
+      </manifest>
+    </jar>
+    <copy file="${dir.src.html}/${file.html}" todir="${dir.tar}"/>
+  </target>
+
+
+  <!--  RLS  -->
+
+  <target name="do-release" depends="do-compile, do-jar">
+    <mkdir dir="${dir.rls}"/>
+    <tar tarfile="${dir.rls}/${file.targz}" basedir="${dir.build}"
+         includes="${component.name}-${version}/**" compression="gzip"/>
+  </target>
+
+
+  <!--  DOC  -->
+
+  <target name="check-doc">
+    <dependset>
+      <srcfileset dir="${dir.src.java}" includes="**/*.java"/>
+      <targetfileset dir="${dir.doc}" includes="**/*.html"/>
+    </dependset>
+    <available property="javadoc.exists" file="${dir.doc}/index.html"/>
+  </target>
+
+  <target name="do-doc" depends="init-doc, check-doc" unless="javadoc.exists">
+    <javadoc packagenames="${packages}" destdir="${dir.doc}" classpathref="cp-compile" access="private" source="1.5">
+      <sourcepath>
+        <pathelement location="${dir.src.java}"/>
+      </sourcepath>
+    </javadoc>
+  </target>
+
+
+  <!--  PUBLIC targets  -->
+
+  <target name="clean" depends="do-clean"/>
+
+  <target name="doc" depends="init, do-doc"/>
+
+  <target name="main" depends="do-antclean, init, do-compile, do-jar, do-release"/>
+
+</project>
