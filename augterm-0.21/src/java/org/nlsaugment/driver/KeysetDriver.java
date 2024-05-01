@@ -41,10 +41,12 @@ import org.nlsaugment.event.KeysetListener;
  *
  * @author cheyer
  *
+ * 2024-05-01 erangell: Changed __axisDividerValue from -13000 to 0 for Gamepad X axis to work as button 4
+ *
  */
 public final class KeysetDriver {
   private static final String __deviceFile = "/dev/input/js0"; // TODO: this needs to be configurable
-  private static final int __axisDividerValue = -13000;  // a reasonable midpoint between the approximate [-10000, -16000] range)
+  private static final int __axisDividerValue = 0; // Configured for Gamepad.  TODO: this needs to be configurable
   private static final KeysetDriver __driver = new KeysetDriver();
 
   private final ArrayList<KeysetListener> _listeners = new ArrayList<KeysetListener>();

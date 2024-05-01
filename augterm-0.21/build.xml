@@ -75,7 +75,7 @@
   <!--  COMPILE  -->
 
   <target name="do-compile" depends="init-build">
-    <javac destdir="${dir.build.classes}" classpathref="cp-compile" failonerror="true" debug="${compiler.debug}" deprecation="${compiler.deprecation}" source="1.5" encoding="UTF8">
+    <javac destdir="${dir.build.classes}" classpathref="cp-compile" failonerror="true" debug="${compiler.debug}" deprecation="${compiler.deprecation}" source="1.7" encoding="UTF8">
       <compilerarg value="-Xlint"/>
       <src path="${dir.src.java}" />
       <src path="${dir.src.test}" />
@@ -118,7 +118,7 @@
   </target>
 
   <target name="do-doc" depends="init-doc, check-doc" unless="javadoc.exists">
-    <javadoc packagenames="${packages}" destdir="${dir.doc}" classpathref="cp-compile" access="private" source="1.5">
+    <javadoc packagenames="${packages}" destdir="${dir.doc}" classpathref="cp-compile" access="private" source="1.7">
       <sourcepath>
         <pathelement location="${dir.src.java}"/>
       </sourcepath>

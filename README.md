@@ -22,4 +22,4 @@ This effort intends to relocate the code for Augterm 0.21 from Sourceforge to Gi
 - Add an option to echo characters typed on the Keyset to the terminal
 
 # Installation Instructions
-- TODO - after initial commit of current codebase
+- TODO 
