@@ -29,9 +29,19 @@ This effort intends to relocate the code for Augterm 0.21 from Sourceforge to Gi
 - Connect the joystick adapter to a USB port.
 - ls /dev/input
   You should see a joystick device such as "js0"
-- Optional: apt-get install joystick
-  This will install joystick support, and a jstest utility - see https://linux.die.net/man/1/jstest
+- Optional: sudo apt-get install joystick
+            sudo apt-get install jstest-gtk
+  This will install joystick support, and a jstest utility 
+  for more information see https://linux.die.net/man/1/jstest
 - Verify that java and ant are installed
+  java --version
+
+  If java is not installed, obtain a Java Development Kit for your system from Oracle:
+  https://www.oracle.com/java/technologies/downloads/
+ 
+  If ant is not installed: sudo apt install ant
+  (on a Mac: brew install ant)
+
 - Clone the repository.  It will create a directory: ReEngage
 - cd ReEngage/augterm-0.21
 - ant
@@ -48,7 +58,7 @@ This effort intends to relocate the code for Augterm 0.21 from Sourceforge to Gi
   To type a z: press right joypad, D, and B (16+8+2)
   The program should return to the bash shell.
 - To run Augterm: cd to the ReEngage directory
-- cd augterm-09.21/build/augterm-0.21
+- cd augterm-0.21/build/augterm-0.21
 - java -jar augterm.jar
 - From the Augterm menu, select Connect
 - Enter a Hostname or IP address, for example: mare.hoardersheaven.net
