@@ -24,30 +24,47 @@ This effort intends to relocate the code for Augterm 0.21 from Sourceforge to Gi
 # Installation Instructions
 - Note: The software was tested on a Raspberry PI 3 and 4.
 - Boot the Pi and connect to the internet without the USB joystick adapter
-- ls /dev/input
+  ```
+  ls /dev/input
+  ```
   You will see a list of input devices. Devices beginning with "js" are joysticks.
 - Connect the joystick adapter to a USB port.
-- ls /dev/input
+  ```
+  ls /dev/input
+  ```
   You should see a joystick device such as "js0"
-- Optional: sudo apt-get install joystick
-            sudo apt-get install jstest-gtk
+- Optional: 
+  ```
+  sudo apt-get install joystick
+  sudo apt-get install jstest-gtk
+  ```
   This will install joystick support, and a jstest utility 
   for more information see https://linux.die.net/man/1/jstest
 - Verify that java and ant are installed
+  ```
   java --version
+  javac --version
+  ```
 
   If java is not installed, obtain a Java Development Kit for your system from Oracle:
   https://www.oracle.com/java/technologies/downloads/
  
-  If ant is not installed: sudo apt install ant
+  If ant is not installed: 
+  ```
+  sudo apt install ant
+  ```
   (on a Mac: brew install ant)
 
 - Clone the repository.  It will create a directory: ReEngage
-- cd ReEngage/augterm-0.21
-- ant
+  ``` 
+  cd ReEngage/augterm-0.21
+  ant
+  ```
   Note: you will get deprecation warnings but the build should be successful
-- cd /build/classes
-- java org.nlsaugment.augterm.TestKeyset
+  ```
+  cd /build/classes
+  java org.nlsaugment.augterm.TestKeyset
+  ```
   This runs the test program.  You should see the message:
   Type the 'z' character on the chord keyset to quit.
 - Test each of the gamepad buttons: A, B, C, D, and the right joypad
@@ -58,8 +75,10 @@ This effort intends to relocate the code for Augterm 0.21 from Sourceforge to Gi
   To type a z: press right joypad, D, and B (16+8+2)
   The program should return to the bash shell.
 - To run Augterm: cd to the ReEngage directory
-- cd augterm-0.21/build/augterm-0.21
-- java -jar augterm.jar
+  ```
+  cd augterm-0.21/build/augterm-0.21
+  java -jar augterm.jar
+  ```
 - From the Augterm menu, select Connect
 - Enter a Hostname or IP address, for example: mare.hoardersheaven.net
 - Enter the port number, for example: 4201
