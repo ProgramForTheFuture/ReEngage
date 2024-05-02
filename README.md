@@ -44,6 +44,7 @@ This effort intends to relocate the code for Augterm 0.21 from Sourceforge to Gi
   ```
   java --version
   javac --version
+  ant -version
   ```
 
   If java is not installed, obtain a Java Development Kit for your system from Oracle:
@@ -57,6 +58,7 @@ This effort intends to relocate the code for Augterm 0.21 from Sourceforge to Gi
 
 - Clone the repository.  It will create a directory: ReEngage
   ``` 
+  git clone https://github.com/ProgramForTheFuture/ReEngage.git
   cd ReEngage/augterm-0.21
   ant
   ```
