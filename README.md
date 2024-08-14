@@ -89,4 +89,9 @@ This effort intends to relocate the code for Augterm 0.21 from Sourceforge to Gi
   Note that characters you typed will not be echoed back to the terminal.
 
 
-  
+ Branch: normally-open-switches
+ This branch has modifications to augterm for use with a chord keyset
+ constructed with 5 normally-open switches.  A gamepad uses normally-
+ closed switches for the directional arrows.  This branch uses software
+ to detect the press and release of the right directional arrow.
+ 
