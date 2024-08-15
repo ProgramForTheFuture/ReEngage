@@ -4,8 +4,11 @@
  *
  * Licensed under GPL Version 2.
  * http://www.gnu.org/licenses/gpl.html
- *
+ * 
+ * Modification history:
  * 2024-05-01 erangell: Changed __axisDividerValue from -13000 to 0 for Gamepad X axis to work as button 4
+ * 2024-06-11 erangell: Inverted logic for X axis to work with normally-open pushbutton
+ * and changed _axisDividerValue to -16384 
  */
 package org.nlsaugment.driver;
 
@@ -46,7 +49,8 @@ import org.nlsaugment.event.KeysetListener;
  */
 public final class KeysetDriver {
   private static final String __deviceFile = "/dev/input/js0"; // TODO: this needs to be configurable
-  private static final int __axisDividerValue = 0; // Configured for Gamepad.  TODO: this needs to be configurable
+  private static final int __axisDividerValue = -16384; // Configured for Gamepad.  TODO: this needs to be configurable
+  private static final int invertXAxis = 1;
   private static final KeysetDriver __driver = new KeysetDriver();
 
   private final ArrayList<KeysetListener> _listeners = new ArrayList<KeysetListener>();
@@ -153,13 +157,14 @@ public final class KeysetDriver {
       keysetPressed03(jr);
     } else if (jr.getType() == JoystickRecord.JS_EVENT_BUTTON && jr.getValue() == 0) {
       keysetReleased03(jr);
-    } else if (jr.getType() == JoystickRecord.JS_EVENT_AXIS && jr.getValue() > __axisDividerValue) {
-      keysetPressed4(jr);
     } else if (jr.getType() == JoystickRecord.JS_EVENT_AXIS && jr.getValue() <= __axisDividerValue) {
+      keysetPressed4(jr);
+    } else if (jr.getType() == JoystickRecord.JS_EVENT_AXIS && jr.getValue() > __axisDividerValue) {
       keysetReleased4(jr);
     } else {
       throw new RuntimeException("unexpected condition");
     }
+    //TODO: use invertAxis flag to do logic above, when 0 do original logic
   }
 
   /**
